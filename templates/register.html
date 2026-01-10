@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Foty.AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Additional styles for landscape form layout */
+        .auth-container {
+            max-width: 800px !important;
+        }
+        
+        .auth-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+        
+        .auth-footer {
+            grid-column: span 2;
+        }
+        
+        .form-actions {
+            grid-column: span 2;
+            display: flex;
+            justify-content: center;
+        }
+        
+        @media (max-width: 768px) {
+            .auth-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width,
+            .auth-footer,
+            .form-actions {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <script>
+      alert("{{ messages[0] }}");
+    </script>
+  {% endif %}
+{% endwith %}
+
+    <header>
+        <nav>
+            <div class="logo">Foty.AI</div>
+            <ul>
+                <li><a href="{{ url_for('backhome') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('analyzer') }}">Analyzer</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="auth-section">
+            <div class="auth-container">
+                <h1>Create an Account</h1>
+                <p>Start analyzing football performance with AI</p>
+                
+                <form class="auth-form" method="POST" action="/register">
+                    <!-- Left Column -->
+                    <div class="form-group">
+                        <label for="register-name">Full Name</label>
+                        <input type="text" id="register-name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-age">Age</label>
+                        <input type="number" id="register-age" name="age" min="10" max="99" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-team">Team Name (Optional)</label>
+                        <input type="text" id="register-team" name="team" placeholder="Your football team">
+                    </div>
+                    
+                    <!-- Right Column -->
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" name="password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-confirm">Confirm Password</label>
+                        <input type="password" id="register-confirm" name="confirm" required>
+                    </div>
+                    
+                    <!-- Full width elements -->
+                    <div class="form-group full-width">
+                        <label for="register-profile">Profile Image (Optional)</label>
+                        <input type="file" id="register-profile" name="profile" accept="image/*">
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label>
+                            <input type="checkbox" name="terms" required> I agree to the <a href="#">Terms of Service</a>
+                        </label>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary"> Register </button>
+                    </div>
+                    
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Foty.AI. All rights reserved.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

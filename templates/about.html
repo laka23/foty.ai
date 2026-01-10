@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Foty.AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Foty.AI</div>
+            <ul>
+                <li><a href="{{ url_for('backhome') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}" class="active">About</a></li>
+                <li><a href="{{ url_for('analyzer') }}">Analyzer</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                {% if user %}
+                    <li class="profile-item">
+                        <a href="{{ url_for('profile') }}" class="profile-link">
+                            <div class="profile-image-container">
+                                <img src="{{ url_for('static', filename=user.image) if user.image else url_for('static', filename='images/default-avatar.jpg') }}" 
+                                     alt="Profile" class="profile-image" id="profileImage">
+                            </div>
+                        </a>
+                    </li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}" class="login-btn">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="about-section">
+            <h1>About Foty.AI</h1>
+            <p>Welcome to Foty.AI, your premier destination for AI-powered football performance analysis.</p>
+            
+            <div class="about-content">
+                <h2>Our Mission</h2>
+                <p>To provide football players with the most accurate and insightful performance metrics to enhance their skills and game.</p>
+                
+                <h2>Our Team</h2>
+                <p>Meet the team behind Foty.AI, dedicated to bringing cutting-edge technology to the world of football.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Foty.AI. All rights reserved.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

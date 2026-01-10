@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Foty.AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <script>
+      alert("{{ messages[0] }}");
+    </script>
+  {% endif %}
+{% endwith %}
+    <header>
+        <nav>
+            <div class="logo">Foty.AI</div>
+            <ul>
+                <li><a href="{{ url_for('backhome') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('analyzer') }}">Analyzer</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                <li><a href="{{ url_for('login') }}" class="login-btn active" >Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="auth-section">
+            <div class="auth-container">
+                <h1>Login to Foty.AI</h1>
+                <p>Access your performance analysis dashboard</p>
+                
+                <form class="auth-form" method="POST" action="/login">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" name="password" required>
+                    </div>
+                    <div class="form-options">
+                        <label>
+                            <input type="checkbox" name="remember"> Remember me
+                        </label>
+                        <a href="{{ url_for('password_update') }}" class="forgot-password">Forgot password?</a>
+                    </div>
+                    <button type="submit" id="loginBtn" class="btn-primary">Login</button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Foty.AI. All rights reserved.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

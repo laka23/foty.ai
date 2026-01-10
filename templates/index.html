@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foty.AI - Football Performance Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .hero {
+            background-image: url("{{ url_for('static', filename='images/pexels-tomas-andreopoulos-230338-797900.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body background="image/pexels-tomas-andreopoulos-230338-797900.jpg">
+    <header>
+        <nav>
+            <div class="logo">Foty.AI</div>
+            <ul>
+                <li><a href="{{ url_for('backhome') }}" class="active">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('analyzer') }}">Analyzer</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                {% if user %}
+                    <li class="profile-item">
+                        <a href="{{ url_for('profile') }}" class="profile-link">
+                            <div class="profile-image-container">
+                                <img src="{{ url_for('static', filename=user.image) if user.image else url_for('static', filename='images/default-avatar.jpg') }}" 
+                                     alt="Profile" class="profile-image" id="profileImage">
+                            </div>
+                        </a>
+                    </li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}" class="login-btn">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>AI-Powered Football Performance Analysis</h1>
+            <p>Get personalized performance insights and improvement recommendations for any football player</p>
+            <div class="cta-buttons">
+                <a href="{{ url_for('register') }}" id="getstart" class="btn-primary">Get Started</a>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <div class="icon">📊</div>
+                <h3>Performance Metrics</h3>
+                <p>Detailed analysis of key performance indicators</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🤖</div>
+                <h3>AI Recommendations</h3>
+                <p>Personalized training and improvement advice</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🎯</div>
+                <h3>Progress Tracking</h3>
+                <p>Monitor your development over time</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Foty.AI. All rights reserved.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Foty.AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Foty.AI</div>
+            <ul>
+                <li><a href="{{ url_for('backhome') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('analyzer') }}">Analyzer</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                <li class="profile-item active">
+                    <a href="{{ url_for('profile') }}" class="profile-link">
+                        <div class="profile-image-container">
+                            <img src="{{ url_for('static', filename=user.image) if user.image else url_for('static', filename='images/default-avatar.jpg') }}" 
+                                 alt="Profile" class="profile-image" id="profileImage">
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="profile-section">
+            <div class="profile-container">
+                <div class="profile-header">
+                    <h1>User Profile</h1>
+                    <p>Manage your account information and settings</p>
+                </div>
+                
+                <div class="profile-content">
+                    <div class="profile-info">
+                        <div class="profile-image-large">
+                            <img src="{{ url_for('static', filename=user.image) if user.image else url_for('static', filename='images/default-avatar.jpg') }}" 
+                                 alt="Profile Picture" id="largeProfileImage"name="image" >
+                            
+                        </div>
+                        
+                        <div class="profile-details">
+                            <h2>{{ user.name if user.name else 'User' }}</h2>
+                            <p class="user-email">{{ user.email }}</p>
+                            <p class="user-role">{{ user.role if user.role else 'Player' }}</p>
+                            {% if user.TeamName %}
+                                <p class="user-team">Team: {{ user.TeamName }}</p>
+                            {% endif %}
+                            {% if user.age %}
+                                <p class="user-age">Age: {{ user.age }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="profile-form">
+                        <h3>Edit Profile Information</h3>
+                        <form method="POST" action="{{ url_for('update') }}" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" name="name" value="{{ user.name if user.name else '' }}" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" value="{{ user.email }}" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="team">Team Name</label>
+                                <input type="text" id="team" name="team" value="{{ user.TeamName if user.TeamName else '' }}">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="age">Age</label>
+                                <input type="number" id="age" name="age" value="{{ user.age if user.age else '' }}" min="10" max="100">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="image">Profile Image</label>
+                                <input type="file" id="image" name="image" accept="image/*">
+                                <small>Supported formats: JPG, PNG, GIF (Max 5MB)</small>
+                            </div>
+                            
+                            <button type="submit" class="btn-primary">Update Profile</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="profile-actions">
+                    <a href="{{ url_for('analyzer') }}" class="btn-secondary">Back to Analyzer</a>
+                    <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Foty.AI. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle image preview
+           const imageInput = document.getElementById('image');
+            const largeProfileImage = document.getElementById('largeProfileImage');
+            const profileImage = document.getElementById('profileImage');
+            
+            imageInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        largeProfileImage.src = e.target.result;
+                        profileImage.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            
+            // Handle large image click
+            const largeImageContainer = document.querySelector('.profile-image-large');
+            largeImageContainer.addEventListener('click', function() {
+                imageInput.click();
+            });
+        });
+    </script>
+</body>
+</html>
